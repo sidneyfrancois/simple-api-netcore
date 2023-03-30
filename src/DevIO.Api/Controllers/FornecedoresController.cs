@@ -21,12 +21,14 @@ namespace DevIO.Api.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<FornecedorViewModel>>> ObterTodos()
         {
             var fornecedor = _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos());
             return Ok(fornecedor);
         }
 
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<FornecedorViewModel>> ObterPorId(Guid id)
         {
             var fornecedor = await ObterFornecedorProdutosEndereco(id);
