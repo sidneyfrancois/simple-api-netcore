@@ -30,6 +30,9 @@ namespace DevIO.Api.Controllers
         public async Task<ActionResult<FornecedorViewModel>> ObterPorId(Guid id)
         {
             var fornecedor = await ObterFornecedorProdutosEndereco(id);
+
+            if (fornecedor == null) return NotFound();
+
             return Ok(fornecedor);
         }
 
