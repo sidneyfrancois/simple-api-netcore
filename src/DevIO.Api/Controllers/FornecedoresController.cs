@@ -46,7 +46,7 @@ namespace DevIO.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<FornecedorViewModel>> Adicionar(FornecedorViewModel fornecedorViewModel)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
             var result = await _fornecedorService.Adicionar(fornecedor);
