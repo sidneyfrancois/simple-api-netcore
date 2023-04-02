@@ -72,15 +72,13 @@ namespace DevIO.Api.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<FornecedorViewModel>> Excluir(Guid id)
         {
-            var fornecedor = await ObterFornecedorEnedereco(id);
+            var fornecedorViewModel = await ObterFornecedorEnedereco(id);
 
-            if (fornecedor == null) return NotFound();
+            if (fornecedorViewModel == null) return NotFound();
 
-            var result = await _fornecedorService.Remover(id);
+            await _fornecedorService.Remover(id);
 
-            if (!result) return BadRequest();
-
-            return Ok(fornecedor);
+            return CustomResponse(fornecedorViewModel);
         }
 
 
