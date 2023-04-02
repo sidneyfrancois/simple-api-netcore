@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DevIO.Business.Intefaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace DevIO.Api.Controllers
         private readonly IProdutoService _produtoService;
         private readonly IMapper _mapper;
 
+        [Route("api/produtos")]
         public ProdutosController(INotificador notificador,
                                   IMapper mapper,
                                   IProdutoRepository produtoRepository, 
