@@ -5,6 +5,7 @@ using DevIO.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -68,6 +69,29 @@ namespace DevIO.Api.Controllers
         private async Task<ProdutoViewModel> ObterProduto(Guid id)
         {
             return _mapper.Map<ProdutoViewModel>(await _produtoRepository.ObterProdutoFornecedor(id));
+        }
+
+        private bool UploadArquivo(string arquivo, string imgNome)
+        {
+            var imageDataByteArray = Convert.FromBase64String(arquivo);
+
+            if (arquivo == null || arquivo.Length <= 0)
+            {
+                NotificarErro("Forneça uma imagem para este produto");
+                return false;
+            }
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imgNome);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                NotificarErro("Já exite um arquivo com este nome");
+                return false;
+            }
+
+            System.IO.File.WriteAllBytes(filePath, imageDataByteArray);
+
+            return true;
         }
     }
 }
