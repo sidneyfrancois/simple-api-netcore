@@ -19,7 +19,8 @@ namespace DevIO.Api.Controllers
 
         public FornecedoresController(IFornecedorRepository fornecedorRepository, 
                                         IFornecedorService fornecedorService, 
-                                        IMapper mapper)
+                                        IMapper mapper,
+                                        INotificador notificador) : base(notificador)
         {
             _fornecedorRepository = fornecedorRepository;
             _fornecedorService = fornecedorService;
