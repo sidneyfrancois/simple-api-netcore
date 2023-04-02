@@ -50,22 +50,23 @@ namespace DevIO.Api.Controllers
 
             await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorViewModel));
 
-            return Ok(fornecedorViewModel);
+            return CustomResponse(fornecedorViewModel);
         }
 
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<FornecedorViewModel>> Atualizar(Guid id, FornecedorViewModel fornecedorViewModel)
         {
-            if (id != fornecedorViewModel.Id) return BadRequest();
+            if (id != fornecedorViewModel.Id)
+            {
+                NotificarErro("O id iformado não é o mesmo que foi passado na query");
+                return CustomResponse(fornecedorViewModel);
+            }
 
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
-            var result = await _fornecedorService.Atualizar(fornecedor);
+            await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorViewModel));
 
-            if (!result) return BadRequest();
-
-            return Ok(fornecedor);
+            return CustomResponse(fornecedorViewModel);
         }
 
         [HttpDelete("{id:guid}")]
