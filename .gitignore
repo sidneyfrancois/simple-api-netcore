@@ -3,6 +3,7 @@
 project.lock.json
 .DS_Store
 *.pyc
+src/*/wwwroot/imagens
 
 # Visual Studio Code
 .vscode
