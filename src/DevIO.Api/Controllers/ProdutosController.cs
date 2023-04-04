@@ -65,15 +65,15 @@ namespace DevIO.Api.Controllers
         }
 
         [HttpPost("adicionar")]
-        public async Task<ActionResult<ProdutoViewModel>> AdicionarAlternativa(ProdutoImagemViewModel produtoViewModel)
+        public async Task<ActionResult<ProdutoImagemViewModel>> AdicionarAlternativa(ProdutoImagemViewModel produtoViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var imgPrefixo = Guid.NewGuid() + "_" + produtoViewModel.Imagem;
+            var imgPrefixo = Guid.NewGuid() + "_";
 
             if (!await UploadArquivoAlternativo(produtoViewModel.ImagemUpload, imgPrefixo))
             {
-                return CustomResponse(produtoViewModel);
+                return CustomResponse(ModelState);
             }
 
             produtoViewModel.Imagem = imgPrefixo + produtoViewModel.ImagemUpload.FileName;
